@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+{% block content %}
+
+<main class="container">
+  <div class="row">
+    <section class="col-12 col-md-6 mx-auto">
+      <img src="{{url_for('static', filename='login.jpg')}}" alt="item catalog website screenshot" class="w-100 rounded border">
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show my-3" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{ message }}</strong>
+      </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+      <div id="result"></div>
+
+      <h3 class="text-primary mt-5 mb-3">Sign In with one of these services</h1>
+
+      <!--GOOGLE+ SIGN IN BUTTON-->
+      <button id="google-sign-in-btn" class="btn btn-outline-primary btn-lg btn-block" data-google-client-id="{{GOOGLE_CLIENT_ID}}" data-state="{{STATE}}" data-redirect="{{GOOGLE_REDIRECT}}">
+        <i class="fa fa-google-plus"></i> &nbsp;Sign in with Google
+      </button>
+
+      <!--FACEBOOK SIGN IN BUTTON-->
+      <button id="facebook-sign-in-btn" class="btn btn-outline-primary btn-lg btn-block" onclick="location.href='https://www.facebook.com/v2.10/dialog/oauth?client_id={{FB_APP_ID}}&redirect_uri={{FB_REDIRECT_URI}}&scope=public_profile,email&state={{STATE}}'">
+        <i class="fa fa-facebook-square"></i> &nbsp;Sign In with Facebook
+      </button>
+
+    </section>
+  </div><!--/row-->
+</main><!--/.container-->
+{% endblock %}
+
+{% block javascript %}
+  <!-- BEGIN PRE-REQUISITES FOR GOOGLE SIGN IN -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+  <script src="{{url_for('static', filename='oauth.js')}}" type="text/javascript"></script>
+{% endblock %}

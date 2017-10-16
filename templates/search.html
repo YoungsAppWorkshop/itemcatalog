@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<main class="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+
+    <section class="col-12 col-md-9">
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{ message }}</strong>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+      <p class="float-right d-md-none">
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
+      </p>
+
+      <div class="jumbotron category-info" data-category-image="{{url_for('static', filename='category_background.jpg')}}">
+        <h1 class="text-light text-right">Search Result</h1>
+      </div>
+
+      <div class="row">
+      {% for item in items%}
+
+        <article class="card my-3 mx-auto" style="width: 25rem;">
+          <img class="card-img-top" src="{{item.image_url}}" alt="{{item.name}}">
+          <div class="card-body text-right">
+            <h4 class="card-title">{{ item.name }}</h4>
+            <a href="{{url_for('show_item', category_id=item.category_id, item_id=item.id) }}" class="btn btn-outline-secondary">View Details</a>
+          </div>
+        </article>
+      {% else %}
+
+        <div class="col-10 mx-auto alert alert-warning" role="alert">
+          <strong>No Item Found</strong> Try other keyword.
+        </div>
+
+      {% endfor %}
+      </div><!--/col-->
+    </section><!--/row-->
+
+    {% include "sidebar.html" %}
+  </div><!--/row-->
+
+  {% include "footer.html" %}
+
+</main><!--/.container-->
+{% endblock %}

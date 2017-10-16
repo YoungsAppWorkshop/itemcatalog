@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<main class="container">
+
+  <nav class="breadcrumb">
+    <a class="breadcrumb-item" href="{{url_for('show_all_items')}}">All Category</a>
+    <a class="breadcrumb-item" href="{{url_for('show_category_items', category_id=target_category.id)}}">{{target_category.name}}</a>
+    <a class="breadcrumb-item" href="{{url_for('show_item', category_id=target_category.id, item_id=item.id)}}">{{ item.name }}</a>
+    <a class="breadcrumb-item active" href="{{url_for('delete_item', category_id=target_category.id, item_id=item.id)}}">Delete</a>
+  </nav>
+
+  <h1 class="my-4">Delete Item</h1>
+
+  <section class="row mb-2">
+
+    <div class="col-12 col-md-8">
+      <form action="{{ url_for('delete_item', category_id=item.category_id, item_id=item.id)}}" method="post">
+
+        <div class="alert alert-danger" role="alert">
+          <h4 class="alert-heading">Are you serious?</h4>
+          <br>
+          <p>Aww man, you are about to delete {{item.name}} from database. Once you press the button, it'll be forever gone. You'd better know what you're doing. Think twice, before you push the scary DELETE button below.</p>
+          <br>
+          <hr>
+          <p class="mb-0">Push the CANCEL button when you still have a chance...</p>
+        </div>
+
+        <div class="text-right mb-3">
+          <input class="btn btn-outline-danger" type="submit" value="Delete">
+          <button class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <img class="img-fluid w-100 mb-3" src="{{item.image_url}}" alt="{{item.name}}">
+      <p>{{ item.description }}</p>
+      <h3 class="text-right"><span class="badge badge-dark">{{ item.price }}</span></h3>
+    </div>
+
+  </section>
+
+  {% include "footer.html" %}
+
+</main>
+{% endblock %}

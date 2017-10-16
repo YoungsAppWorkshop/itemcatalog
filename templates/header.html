@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{{url_for('show_all_items')}}">Item Catalog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsDefault">
+
+      <form class="form-inline mr-auto" action="{{url_for('search_items')}}" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="e.g. tekken" name="title" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+      <ul class="navbar-nav my-2 my-lg-0">
+        {% if is_logged_in %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('create_new_item')}}">Add New Item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('logout')}}">Sign Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('show_login')}}">Sign In</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
