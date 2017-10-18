@@ -6,7 +6,6 @@ import re
 import json
 import uuid
 
-import requests
 import httplib2
 
 from sqlalchemy import create_engine
@@ -43,6 +42,16 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# app.session_interface = serversidesession.RedisSessionInterface()
+app.config.from_object(__name__)
+
+# Load default config and override config from an environment variable
+app.config.update(dict(
+    SECRET_KEY='development key',
+    UPLOAD_FOLDER=UPLOAD_FOLDER,
+    SESSION_INTERFACE=serversidesession.RedisSessionInterface()
+))
 
 
 # HTML endpoints for Authentication & Authorization
@@ -270,11 +279,13 @@ def gconnect():
             return response
 
     # Get user info
-    userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
-    params = {'access_token': access_token, 'alt': 'json'}
-    answer = requests.get(userinfo_url, params=params)
+    userinfo_url = 'https://www.googleapis.com/oauth2/v1/userinfo?'
+    userinfo_url += 'alt=json&access_token=%s' % access_token
 
-    data = answer.json()
+    h = httplib2.Http()
+    response = h.request(userinfo_url, 'GET')[1]
+    str_response = response.decode('utf-8')
+    data = json.loads(str_response)
 
     # Store the access token, user data in the session
     login_session['provider'] = 'google+'

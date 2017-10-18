@@ -1,0 +1,7 @@
+fb_client_secrets.json
+google_client_secrets.json
+*.pyc
+*.db
+*.rdb
+venv/
+itemcatalog.egg-info/
