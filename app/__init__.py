@@ -19,8 +19,8 @@ app.config.from_object(__name__)
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
-    SQLALCHEMY_DATABASE_URI='sqlite:///catalog.db',
-    SECRET_KEY='development key',
+    SQLALCHEMY_DATABASE_URI=os.environ['ITEMCATALOG_DB_URI'],  # noqa
+    SECRET_KEY=os.environ['ITEMCATALOG_SECRET_KEY'],
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     UPLOAD_FOLDER=UPLOAD_FOLDER
 ))
@@ -39,6 +39,7 @@ app.register_blueprint(auth_module)
 app.register_blueprint(catalog_module)
 
 
+# Default route
 @app.route('/')
 def redirect_to_all_category():
     return redirect(url_for('catalog.show_all_items'))
@@ -48,8 +49,3 @@ def redirect_to_all_category():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-# Build the database:
-# This will create the database file using SQLAlchemy
-# db.create_all()

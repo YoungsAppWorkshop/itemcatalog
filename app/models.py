@@ -77,7 +77,7 @@ class Item(Base):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(250))
+    description = db.Column(db.String(400))
     price = db.Column(db.String(8))
     image_url = db.Column(db.String(250))
     youtube_trailer_url = db.Column(db.String(250))
