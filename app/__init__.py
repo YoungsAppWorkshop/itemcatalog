@@ -14,16 +14,10 @@ app = Flask(__name__)
 
 # Using server-side session to securely store user profile info
 app.session_interface = serversidesession.RedisSessionInterface()
-UPLOAD_FOLDER = 'uploads'
-app.config.from_object(__name__)
 
 # Load default config and override config from an environment variable
-app.config.update(dict(
-    SQLALCHEMY_DATABASE_URI=os.environ['ITEMCATALOG_DB_URI'],  # noqa
-    SECRET_KEY=os.environ['ITEMCATALOG_SECRET_KEY'],
-    SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    UPLOAD_FOLDER=UPLOAD_FOLDER
-))
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.update(dict(UPLOAD_FOLDER='uploads'))
 
 # Create a Database object
 db = SQLAlchemy(app)
