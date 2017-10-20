@@ -5,10 +5,10 @@
 <main class="container">
 
   <nav class="breadcrumb">
-    <a class="breadcrumb-item" href="{{url_for('show_all_items')}}">All Category</a>
-    <a class="breadcrumb-item" href="{{url_for('show_category_items', category_id=target_category.id)}}">{{target_category.name}}</a>
-    <a class="breadcrumb-item" href="{{url_for('show_item', category_id=target_category.id, item_id=item.id)}}">{{ item.name }}</a>
-    <a class="breadcrumb-item active" href="{{url_for('delete_item', category_id=target_category.id, item_id=item.id)}}">Delete</a>
+    <a class="breadcrumb-item" href="{{url_for('catalog.show_all_items')}}">All Category</a>
+    <a class="breadcrumb-item" href="{{url_for('catalog.show_category_items', category_id=target_category.id)}}">{{target_category.name}}</a>
+    <a class="breadcrumb-item" href="{{url_for('catalog.show_item', category_id=target_category.id, item_id=item.id)}}">{{ item.name }}</a>
+    <a class="breadcrumb-item active" href="{{url_for('catalog.delete_item', category_id=target_category.id, item_id=item.id)}}">Delete</a>
   </nav>
 
   <h1 class="my-4">Delete Item</h1>
@@ -16,7 +16,7 @@
   <section class="row mb-2">
 
     <div class="col-12 col-md-8">
-      <form action="{{ url_for('delete_item', category_id=item.category_id, item_id=item.id)}}" method="post">
+      <form action="{{ url_for('catalog.delete_item', category_id=item.category_id, item_id=item.id)}}" method="post">
 
         <div class="alert alert-danger" role="alert">
           <h4 class="alert-heading">Are you serious?</h4>

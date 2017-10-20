@@ -1,25 +1,20 @@
 #!/usr/bin/env python3
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from app import db
+from app.models import Base, Category, Item, User
 
-from model import Base, Category, Item, User
-
-engine = create_engine('sqlite:///catalog.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+# Create the database and tables
+db.create_all()
 
 user1 = User(username='user 1', email='example@gmail.com', picture='picture 1')
 
-session.add(user1)
-session.commit()
+db.session.add(user1)
+db.session.commit()
 
 
 category1 = Category(name='Action')
 
-session.add(category1)
-session.commit()
+db.session.add(category1)
+db.session.commit()
 
 item1 = Item(name='TEKKEN 7',
              description='Discover the epic conclusion of the long-time clan warfare between members of the Mishima family. Powered by Unreal Engine 4, the legendary fighting game franchise fights back with stunning story-driven cinematic battles and intense duels that can be enjoyed with friends and rivals.',  # noqa
@@ -29,8 +24,8 @@ item1 = Item(name='TEKKEN 7',
              category=category1,
              user=user1)
 
-session.add(item1)
-session.commit()
+db.session.add(item1)
+db.session.commit()
 
 
 item2 = Item(name='Grand Theft Auto V',
@@ -41,8 +36,8 @@ item2 = Item(name='Grand Theft Auto V',
              category=category1,
              user=user1)
 
-session.add(item2)
-session.commit()
+db.session.add(item2)
+db.session.commit()
 
 
 item3 = Item(name='Cat Quest',
@@ -53,14 +48,14 @@ item3 = Item(name='Cat Quest',
              category=category1,
              user=user1)
 
-session.add(item3)
-session.commit()
+db.session.add(item3)
+db.session.commit()
 
 
 category2 = Category(name='RPG')
 
-session.add(category2)
-session.commit()
+db.session.add(category2)
+db.session.commit()
 
 
 item4 = Item(name='The Elder Scrolls V: Skyrim Special Edition',
@@ -71,8 +66,8 @@ item4 = Item(name='The Elder Scrolls V: Skyrim Special Edition',
              category=category2,
              user=user1)
 
-session.add(item4)
-session.commit()
+db.session.add(item4)
+db.session.commit()
 
 
 item5 = Item(name='Fallout 4',
@@ -83,13 +78,13 @@ item5 = Item(name='Fallout 4',
              category=category2,
              user=user1)
 
-session.add(item5)
-session.commit()
+db.session.add(item5)
+db.session.commit()
 
 category3 = Category(name='Strategy')
 
-session.add(category3)
-session.commit()
+db.session.add(category3)
+db.session.commit()
 
 
 item6 = Item(name='Sid Meier\'s Civilization® V',
@@ -100,8 +95,8 @@ item6 = Item(name='Sid Meier\'s Civilization® V',
              category=category3,
              user=user1)
 
-session.add(item6)
-session.commit()
+db.session.add(item6)
+db.session.commit()
 
 
 item7 = Item(name='XCOM® 2',
@@ -112,7 +107,7 @@ item7 = Item(name='XCOM® 2',
              category=category3,
              user=user1)
 
-session.add(item7)
-session.commit()
+db.session.add(item7)
+db.session.commit()
 
 print('added menu items!')

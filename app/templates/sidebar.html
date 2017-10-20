@@ -1,0 +1,8 @@
+<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+  <div class="list-group">
+    <a href="{{url_for('catalog.show_all_items') }}" class="list-group-item" data-category-id="all">All Categories</a>
+  {% for category in categories %}
+    <a href="{{url_for('catalog.show_category_items', category_id=category.id) }}" class="list-group-item" data-category-id="{{category.id}}">{{ category.name }}</a>
+  {% endfor %}
+  </div>
+</div><!--/span-->

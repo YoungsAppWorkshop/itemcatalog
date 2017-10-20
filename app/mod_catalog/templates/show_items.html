@@ -25,7 +25,7 @@
       </p>
 
       <div class="jumbotron category-info" data-category-image="{{url_for('static', filename='category_background.jpg')}}">
-        <h1 class="text-light text-right">Search Result</h1>
+        <h1 class="text-light text-right">&nbsp;</h1>
       </div>
 
       <div class="row">
@@ -35,18 +35,13 @@
           <img class="card-img-top" src="{{item.image_url}}" alt="{{item.name}}">
           <div class="card-body text-right">
             <h4 class="card-title">{{ item.name }}</h4>
-            <a href="{{url_for('show_item', category_id=item.category_id, item_id=item.id) }}" class="btn btn-outline-secondary">View Details</a>
+            <a href="{{url_for('catalog.show_item', category_id=item.category_id, item_id=item.id) }}" class="btn btn-outline-secondary">View Details</a>
           </div>
         </article>
-      {% else %}
-
-        <div class="col-10 mx-auto alert alert-warning" role="alert">
-          <strong>No Item Found</strong> Try other keyword.
-        </div>
 
       {% endfor %}
-      </div><!--/col-->
-    </section><!--/row-->
+      </div><!--/row-->
+    </section><!--/col-->
 
     {% include "sidebar.html" %}
   </div><!--/row-->

@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+from app import db
 
-Base = declarative_base()
+
+class Base(db.Model):
+    """ Define a base model for other database tables to inherit"""
+    __abstract__ = True
+
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
+                              onupdate=db.func.current_timestamp())
 
 
 class User(Base):
@@ -18,10 +23,10 @@ class User(Base):
     """
     __tablename__ = 'user'
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String(32), nullable=False)
-    email = Column(String(100), index=True, nullable=False)
-    picture = Column(String(250))
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(32), nullable=False)
+    email = db.Column(db.String(100), index=True, nullable=False)
+    picture = db.Column(db.String(250))
 
     @property
     def serialize(self):
@@ -43,8 +48,8 @@ class Category(Base):
     """
     __tablename__ = 'category'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(32), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), nullable=False)
 
     @property
     def serialize(self):
@@ -70,16 +75,16 @@ class Item(Base):
     """
     __tablename__ = 'item'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False)
-    description = Column(String(250))
-    price = Column(String(8))
-    image_url = Column(String(250))
-    youtube_trailer_url = Column(String(250))
-    category_id = Column(Integer, ForeignKey('category.id'))
-    category = relationship(Category)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.String(250))
+    price = db.Column(db.String(8))
+    image_url = db.Column(db.String(250))
+    youtube_trailer_url = db.Column(db.String(250))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship(Category)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship(User)
 
     @property
     def serialize(self):
@@ -94,7 +99,3 @@ class Item(Base):
             'category_id': self.category_id,
             'user_id': self.user_id
         }
-
-
-engine = create_engine('sqlite:///catalog.db')
-Base.metadata.create_all(engine)

@@ -5,9 +5,9 @@
 <main class="container">
 
   <nav class="breadcrumb">
-    <a class="breadcrumb-item" href="{{url_for('show_all_items')}}">All Category</a>
-    <a class="breadcrumb-item" href="{{url_for('show_category_items', category_id=category.id)}}">{{category.name}}</a>
-    <a class="breadcrumb-item active" href="{{url_for('show_item', category_id=category.id, item_id=item.id)}}">{{ item.name }}</a>
+    <a class="breadcrumb-item" href="{{url_for('catalog.show_all_items')}}">All Category</a>
+    <a class="breadcrumb-item" href="{{url_for('catalog.show_category_items', category_id=category.id)}}">{{category.name}}</a>
+    <a class="breadcrumb-item active" href="{{url_for('catalog.show_item', category_id=category.id, item_id=item.id)}}">{{ item.name }}</a>
   </nav>
 
   {% with messages = get_flashed_messages() %}
@@ -42,8 +42,8 @@
   {% if is_logged_in %}
   <div class="row mt-5">
     <div class="col-12 text-right">
-      <a class="btn btn-outline-success" href="{{url_for('edit_item', category_id=category.id, item_id=item.id)}}" role="button">&nbsp; Edit &nbsp;</a>
-      <a class="btn btn-outline-danger" href="{{url_for('delete_item', category_id=category.id, item_id=item.id)}}" role="button">Delete</a>
+      <a class="btn btn-outline-success" href="{{url_for('catalog.edit_item', category_id=category.id, item_id=item.id)}}" role="button">&nbsp; Edit &nbsp;</a>
+      <a class="btn btn-outline-danger" href="{{url_for('catalog.delete_item', category_id=category.id, item_id=item.id)}}" role="button">Delete</a>
     </div>
   </div>
   {% endif %}

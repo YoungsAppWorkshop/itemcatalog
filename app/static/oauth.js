@@ -26,7 +26,7 @@ function googleSignInCallback(authResult) {
     // Send the code to the server
     $.ajax({
       type: 'POST',
-      url: '/gconnect?state=' + state,
+      url: '/auth/gconnect?state=' + state,
       processData: false,
       data: authResult.code,
       contentType: 'application/octet-stream; charset=utf-8',
