@@ -10,7 +10,7 @@ from flask import (Blueprint, request, render_template, redirect, url_for,
 from flask import session as login_session
 
 # Import the database object from the main app module
-from app import db
+from app import app, db
 from app.models import Category, Item
 
 
@@ -54,6 +54,14 @@ def extract_youtube_id(youtube_url):
     youtube_id_match = youtube_id_match or re.search(
         r'(?<=be/)[^&#]+', youtube_url)
     return (youtube_id_match.group(0) if youtube_id_match else None)
+
+
+def get_user_id(email):
+    try:
+        user = db.session.query(User).filter_by(email=email).one()
+        return user.id
+    except Exception:
+        return None
 
 
 # Routes for HTML endpoints

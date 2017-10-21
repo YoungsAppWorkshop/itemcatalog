@@ -14,7 +14,6 @@ app.session_interface = serversidesession.RedisSessionInterface()
 
 # Load default config and override config from an environment variable
 app.config.from_object(os.environ['APP_SETTINGS'])
-app.config.update(dict(UPLOAD_FOLDER='uploads'))
 
 # Create a Database object
 db = SQLAlchemy(app)
