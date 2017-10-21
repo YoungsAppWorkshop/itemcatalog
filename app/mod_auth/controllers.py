@@ -33,6 +33,8 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/auth',
 # HTML endpoints for Authentication & Authorization
 @mod_auth.route('/login')
 def show_login():
+    """ Create an anti-forgery token and show login page"""
+
     is_logged_in = 'username' in login_session
     # Create anti-forgery state token
     state = ''.join(random.choice(
@@ -40,7 +42,7 @@ def show_login():
     login_session['state'] = state
     return render_template('login.html', is_logged_in=is_logged_in,
                            GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID,
-                           GOOGLE_REDIRECT=url_for('catalog.show_all_items'),  # noqa
+                           GOOGLE_REDIRECT=url_for('catalog.show_all_items'),
                            FB_APP_ID=FB_APP_ID,
                            FB_REDIRECT_URI=FB_REDIRECT_URI,
                            STATE=state)
@@ -48,6 +50,10 @@ def show_login():
 
 @mod_auth.route('/logout')
 def logout():
+    """ Check if the user is logged in, and redirect to disconnect functions
+        according to the OAuth provider
+    """
+
     stored_provider = login_session.get('provider')
     if stored_provider is None:
         flash('Current user not connected.')
@@ -62,6 +68,10 @@ def logout():
 # Facebook OAuth endpoints
 @mod_auth.route('/fbconnect')
 def fbconnect():
+    """ Facebook OAuth Authentication function.
+        Authenticate the user using authorization code, get the user info
+        from Facebook, and create login_session object.
+    """
     # Validate anti-forgery state token
     if request.args.get('state') != login_session['state']:
         abort(401, 'Invalid state parameter.')
@@ -155,6 +165,9 @@ def fbconnect():
 
 @mod_auth.route('/fbdisconnect')
 def fbdisconnect():
+    """ Revoke Facebook OAuth token and delete login_session object.
+    """
+
     facebook_id = login_session.get('id')
     access_token = login_session.get('access_token')
     # Only disconnect a connected user.
@@ -184,6 +197,11 @@ def fbdisconnect():
 # Google+ OAuth endpoints
 @mod_auth.route('/gconnect', methods=['POST'])
 def gconnect():
+    """ Google OAuth Authentication function.
+        Authenticate the user using authorization code, get the user info
+        from Google, and create login_session object.
+    """
+
     # Validate anti-forgery state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -284,6 +302,9 @@ def gconnect():
 
 @mod_auth.route('/gdisconnect')
 def gdisconnect():
+    """ Revoke Google OAuth token and delete login_session object.
+    """
+
     # Only disconnect a connected user.
     access_token = login_session.get('access_token')
     if access_token is None:
@@ -312,6 +333,8 @@ def gdisconnect():
 
 # Helper Functions
 def create_user(login_session):
+    """ Create a new user and store data in database"""
+
     new_user = User(username=login_session['username'], email=login_session[
         'email'], picture=login_session['picture'])
     db.session.add(new_user)
@@ -321,11 +344,15 @@ def create_user(login_session):
 
 
 def get_user_info(user_id):
+    """ Get user information from database"""
+
     user = db.session.query(User).filter_by(id=user_id).one()
     return user
 
 
 def get_user_id(email):
+    """ Get user_id using email"""
+
     try:
         user = db.session.query(User).filter_by(email=email).one()
         return user.id

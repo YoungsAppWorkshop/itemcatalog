@@ -14,7 +14,7 @@ from app import app, db
 from app.models import Category, Item
 
 
-# Set Upload folder and allowed file extentions
+# Set allowed file extentions
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 # Define the blueprint: 'catalog', set its url prefix: app.url/catalog
@@ -24,6 +24,8 @@ mod_catalog = Blueprint('catalog', __name__, url_prefix='/catalog',
 
 # Helper Functions
 def login_required(func):
+    """ Decorator to check if the user is logged in"""
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         if 'username' not in login_session:
@@ -35,6 +37,8 @@ def login_required(func):
 
 
 def is_valid_category_id(category_id):
+    """ Check if a category_id is valid"""
+
     try:
         target_category = db.session.query(Category).filter_by(
             id=category_id).one()
@@ -44,12 +48,15 @@ def is_valid_category_id(category_id):
 
 
 def allowed_file(filename):
+    """ Check if file extension of a file is allowed"""
+
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def extract_youtube_id(youtube_url):
-    # Extract the youtube ID from the url
+    """ Extract the youtube ID from the url"""
+
     youtube_id_match = re.search(r'(?<=v=)[^&#]+', youtube_url)
     youtube_id_match = youtube_id_match or re.search(
         r'(?<=be/)[^&#]+', youtube_url)
@@ -57,6 +64,8 @@ def extract_youtube_id(youtube_url):
 
 
 def get_user_id(email):
+    """ Find a user id using email"""
+
     try:
         user = db.session.query(User).filter_by(email=email).one()
         return user.id
@@ -67,6 +76,8 @@ def get_user_id(email):
 # Routes for HTML endpoints
 @mod_catalog.route('/categories/all/')
 def show_all_items():
+    """ Show all items of all categories"""
+
     is_logged_in = 'username' in login_session
     categories = db.session.query(Category).order_by(Category.name)
     items = db.session.query(Item).order_by(Item.id)
@@ -77,6 +88,8 @@ def show_all_items():
 
 @mod_catalog.route('/categories/<int:category_id>/')
 def show_category_items(category_id):
+    """ Show all items of a category"""
+
     is_logged_in = 'username' in login_session
     categories = db.session.query(Category).order_by(Category.name)
     items = db.session.query(Item).filter_by(category_id=category_id)
@@ -86,6 +99,8 @@ def show_category_items(category_id):
 
 @mod_catalog.route('/search')
 def search_items():
+    """ Show all items which contain the search phrase in items' name"""
+
     is_logged_in = 'username' in login_session
     search_title = '%' + request.args.get('title') + '%'
     categories = db.session.query(Category).order_by(Category.name)
@@ -97,6 +112,8 @@ def search_items():
 @mod_catalog.route('/categories/new-item', methods=['GET', 'POST'])
 @login_required
 def create_new_item():
+    """ Create a new item, upload image file, and store it in database"""
+
     # Check if user is logged in
     is_logged_in = 'username' in login_session
 
@@ -156,6 +173,8 @@ def create_new_item():
 
 @mod_catalog.route('/categories/<int:category_id>/items/<int:item_id>/')
 def show_item(category_id, item_id):
+    """ Show an item of a category"""
+
     is_logged_in = 'username' in login_session
     target_item = None
     category = None
@@ -176,6 +195,8 @@ def show_item(category_id, item_id):
                    methods=['GET', 'POST'])
 @login_required
 def edit_item(category_id, item_id):
+    """ Edit an item of a category"""
+
     # Check if user is logged in
     is_logged_in = 'username' in login_session
     target_category = None
@@ -239,6 +260,8 @@ def edit_item(category_id, item_id):
                    methods=['GET', 'POST'])
 @login_required
 def delete_item(category_id, item_id):
+    """ Delete an item of a category"""
+
     is_logged_in = 'username' in login_session
     target_category = None
     target_item = None

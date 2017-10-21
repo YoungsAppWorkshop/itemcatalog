@@ -32,10 +32,14 @@ app.register_blueprint(catalog_module)
 # Default route
 @app.route('/')
 def redirect_to_all_category():
+    """ Redirect to show_all_items function"""
+
     return redirect(url_for('catalog.show_all_items'))
 
 
 # Serving uploaded files
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    """ Serving uploaded files"""
+
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
