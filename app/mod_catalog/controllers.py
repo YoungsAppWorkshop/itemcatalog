@@ -2,25 +2,58 @@
 import os
 import re
 import uuid
-
-from sqlalchemy.orm.exc import NoResultFound
+from functools import wraps
 
 from werkzeug.utils import secure_filename
 from flask import (Blueprint, request, render_template, redirect, url_for,
-                   flash, abort, send_from_directory)
+                   flash, abort)
 from flask import session as login_session
 
 # Import the database object from the main app module
 from app import db
 from app.models import Category, Item
 
+
 # Set Upload folder and allowed file extentions
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
 
 # Define the blueprint: 'catalog', set its url prefix: app.url/catalog
 mod_catalog = Blueprint('catalog', __name__, url_prefix='/catalog',
                         template_folder='templates')
+
+
+# Helper Functions
+def login_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'username' not in login_session:
+            flash('You should sign in first.')
+            return redirect(url_for('auth.show_login'))
+        else:
+            return func(*args, **kwargs)
+    return wrapper
+
+
+def is_valid_category_id(category_id):
+    try:
+        target_category = db.session.query(Category).filter_by(
+            id=category_id).one()
+        return True
+    except Exception:
+        return False
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def extract_youtube_id(youtube_url):
+    # Extract the youtube ID from the url
+    youtube_id_match = re.search(r'(?<=v=)[^&#]+', youtube_url)
+    youtube_id_match = youtube_id_match or re.search(
+        r'(?<=be/)[^&#]+', youtube_url)
+    return (youtube_id_match.group(0) if youtube_id_match else None)
 
 
 # Routes for HTML endpoints
@@ -54,12 +87,10 @@ def search_items():
 
 
 @mod_catalog.route('/categories/new-item', methods=['GET', 'POST'])
+@login_required
 def create_new_item():
     # Check if user is logged in
     is_logged_in = 'username' in login_session
-    if not is_logged_in:
-        flash('You should sign in to create a new item.')
-        return redirect('/login')
 
     # If logged in, handle the request
     if request.method == 'POST':
@@ -135,12 +166,10 @@ def show_item(category_id, item_id):
 
 @mod_catalog.route('/categories/<int:category_id>/items/<int:item_id>/edit',
                    methods=['GET', 'POST'])
+@login_required
 def edit_item(category_id, item_id):
     # Check if user is logged in
     is_logged_in = 'username' in login_session
-    if not is_logged_in:
-        flash('You should sign in to edit the item.')
-        return redirect('/login')
     target_category = None
     target_item = None
     try:
@@ -200,11 +229,9 @@ def edit_item(category_id, item_id):
 
 @mod_catalog.route('/categories/<int:category_id>/items/<int:item_id>/delete',
                    methods=['GET', 'POST'])
+@login_required
 def delete_item(category_id, item_id):
     is_logged_in = 'username' in login_session
-    if not is_logged_in:
-        flash('You should sign in to delete the item.')
-        return redirect('/login')
     target_category = None
     target_item = None
     try:
@@ -223,26 +250,3 @@ def delete_item(category_id, item_id):
         return render_template('delete_item.html', is_logged_in=is_logged_in,
                                target_category=target_category,
                                item=target_item)
-
-
-# Helper Functions
-def is_valid_category_id(category_id):
-    try:
-        target_category = db.session.query(Category).filter_by(
-            id=category_id).one()
-        return True
-    except NoResultFound:
-        return False
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def extract_youtube_id(youtube_url):
-    # Extract the youtube ID from the url
-    youtube_id_match = re.search(r'(?<=v=)[^&#]+', youtube_url)
-    youtube_id_match = youtube_id_match or re.search(
-        r'(?<=be/)[^&#]+', youtube_url)
-    return (youtube_id_match.group(0) if youtube_id_match else None)
