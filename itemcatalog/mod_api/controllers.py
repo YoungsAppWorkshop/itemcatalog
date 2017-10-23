@@ -2,8 +2,8 @@
 from flask import Blueprint, jsonify, abort
 
 # Import the database object from the main app module
-from app import db
-from app.models import Category, Item, User
+from ..itemcatalog import db
+from ..models import Category, Item, User
 
 
 # Define the blueprint: 'api', set its url prefix: app.url/api

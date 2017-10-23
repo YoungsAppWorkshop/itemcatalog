@@ -3,7 +3,7 @@ import os
 from flask import Flask, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
-import app.serversidesession
+import serversidesession
 
 
 app = Flask(__name__)
@@ -19,9 +19,9 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable
-from app.mod_api.controllers import mod_api as api_module
-from app.mod_auth.controllers import mod_auth as auth_module
-from app.mod_catalog.controllers import mod_catalog as catalog_module
+from mod_api.controllers import mod_api as api_module
+from mod_auth.controllers import mod_auth as auth_module
+from mod_catalog.controllers import mod_catalog as catalog_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)

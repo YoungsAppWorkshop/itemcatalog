@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from app import db
+from .itemcatalog import db
 
 
 class Base(db.Model):
