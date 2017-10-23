@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from app import db
-from app.models import Base, Category, Item, User
+from itemcatalog.itemcatalog import db
+from itemcatalog.models import Base, Category, Item, User
 
 # Create the database and tables
 db.create_all()
