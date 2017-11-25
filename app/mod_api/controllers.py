@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, abort
 
 # Import the database object from the main app module
-from ..itemcatalog import db
+from .. import db
 from ..models import Category, Item, User
 
 

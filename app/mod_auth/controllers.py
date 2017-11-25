@@ -13,7 +13,7 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
 # Import the database object from the main app module
-from ..itemcatalog import db
+from .. import db
 from ..models import User
 
 

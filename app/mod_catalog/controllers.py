@@ -10,7 +10,7 @@ from flask import (Blueprint, request, render_template, redirect, url_for,
 from flask import session as login_session
 
 # Import the database object from the main app module
-from ..itemcatalog import app, db
+from .. import app, db
 from ..models import Category, Item
 
 

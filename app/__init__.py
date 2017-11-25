@@ -13,15 +13,15 @@ app = Flask(__name__)
 app.session_interface = serversidesession.RedisSessionInterface()
 
 # Load default config and override config from an environment variable
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object('config')
 
 # Create a Database object
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable
-from .mod_api.controllers import mod_api as api_module
-from .mod_auth.controllers import mod_auth as auth_module
-from .mod_catalog.controllers import mod_catalog as catalog_module
+from app.mod_api.controllers import mod_api as api_module
+from app.mod_auth.controllers import mod_auth as auth_module
+from app.mod_catalog.controllers import mod_catalog as catalog_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)
