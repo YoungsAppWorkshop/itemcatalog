@@ -11,7 +11,7 @@ mod_api = Blueprint('api', __name__, url_prefix='/api')
 
 
 # Routes for JSON endpoints
-@mod_api.route('/categories/all/JSON')
+@mod_api.route('/categories/all/')
 def jsonify_all_categories():
     """Return all categories information in JSON"""
     try:
@@ -21,7 +21,7 @@ def jsonify_all_categories():
         abort(404)
 
 
-@mod_api.route('/categories/all/items/JSON')
+@mod_api.route('/categories/all/items/')
 def jsonify_all_items():
     """Return all items information in JSON"""
     try:
@@ -31,7 +31,7 @@ def jsonify_all_items():
         abort(404)
 
 
-@mod_api.route('/categories/<int:category_id>/items/JSON')
+@mod_api.route('/categories/<int:category_id>/items/all/')
 def jsonify_category_items(category_id):
     """Return all items information of a category in JSON"""
     try:
@@ -42,7 +42,7 @@ def jsonify_category_items(category_id):
         abort(404)
 
 
-@mod_api.route('/categories/<int:category_id>/items/<int:item_id>/JSON')
+@mod_api.route('/categories/<int:category_id>/items/<int:item_id>/')
 def jsonify_item(category_id, item_id):
     """Return an item information of a category in JSON"""
     try:
@@ -53,7 +53,7 @@ def jsonify_item(category_id, item_id):
         abort(404)
 
 
-@mod_api.route('/users/all/JSON')
+@mod_api.route('/users/all/')
 def jsonify_all_users():
     """Return all users information in JSON"""
     try:
