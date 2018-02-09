@@ -3,17 +3,19 @@ import os
 from flask import Flask, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
-from . import serversidesession
-
+# To load configuration variables from an instance folder, uncomment the below
+# The instance folder can be used to store sensitive informations such as
+# API secrets, DB URIs or to define a configuration specific for the instance
+# app = Flask(__name__, instance_relative_config=True)
 
 app = Flask(__name__)
 
-
-# Using server-side session to securely store user profile info
-app.session_interface = serversidesession.RedisSessionInterface()
-
-# Load default config and override config from an environment variable
+# Load default config
 app.config.from_object('config')
+
+# To load configuration variables from an instance folder, uncomment the below
+# app.config.from_pyfile('config.py')
+
 
 # Create a Database object
 db = SQLAlchemy(app)

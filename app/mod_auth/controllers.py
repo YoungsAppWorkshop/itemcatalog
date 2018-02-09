@@ -13,16 +13,18 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
 # Import the database object from the main app module
-from .. import db
+from .. import app, db
 from ..models import User
 
 
 # Load OAuth Client Secrets from JSON files
-GOOGLE_CLIENT_SECRET_FILE = 'google_client_secrets.json'
-GOOGLE_CLIENT_ID = json.loads(open(GOOGLE_CLIENT_SECRET_FILE, 'r').read())['web']['client_id']  # noqa
-FB_APP_ID = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']  # noqa
-FB_APP_SECRET = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']  # noqa
-FB_REDIRECT_URI = json.loads(open('fb_client_secrets.json', 'r').read())['web']['redirect_uri']  # noqa
+GOOGLE_API_SECRET_FILE = app.config['GOOGLE_CLIENT_SECRET_FILE']
+FB_API_SECRET_FILE = app.config['FB_CLIENT_SECRET_FILE']
+
+GOOGLE_CLIENT_ID = json.loads(open(GOOGLE_API_SECRET_FILE, 'r').read())['web']['client_id']  # noqa
+FB_APP_ID = json.loads(open(FB_API_SECRET_FILE, 'r').read())['web']['app_id']  # noqa
+FB_APP_SECRET = json.loads(open(FB_API_SECRET_FILE, 'r').read())['web']['app_secret']  # noqa
+FB_REDIRECT_URI = json.loads(open(FB_API_SECRET_FILE, 'r').read())['web']['redirect_uri']  # noqa
 
 
 # Define the blueprint: 'auth', set its url prefix: app.url/auth
@@ -220,7 +222,7 @@ def gconnect():
 
     # Upgrade the authorization code into a credentials object
     try:
-        oauth_flow = flow_from_clientsecrets(GOOGLE_CLIENT_SECRET_FILE,
+        oauth_flow = flow_from_clientsecrets(GOOGLE_API_SECRET_FILE,
                                              scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
