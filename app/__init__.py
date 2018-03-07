@@ -6,24 +6,24 @@ from flask_sqlalchemy import SQLAlchemy
 # To load configuration variables from an instance folder, uncomment the below
 # The instance folder can be used to store sensitive informations such as
 # API secrets, DB URIs or to define a configuration specific for the instance
-# app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__, instance_relative_config=True)
+# app = Flask(__name__)
 
-app = Flask(__name__)
 
 # Load default config
 app.config.from_object('config')
 
 # To load configuration variables from an instance folder, uncomment the below
-# app.config.from_pyfile('config.py')
+app.config.from_pyfile('config.py')
 
 
 # Create a Database object
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable
-from app.mod_api.controllers import mod_api as api_module
-from app.mod_auth.controllers import mod_auth as auth_module
-from app.mod_catalog.controllers import mod_catalog as catalog_module
+from .mod_api.controllers import mod_api as api_module
+from .mod_auth.controllers import mod_auth as auth_module
+from .mod_catalog.controllers import mod_catalog as catalog_module
 
 # Register blueprint(s)
 app.register_blueprint(api_module)
