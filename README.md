@@ -1,6 +1,6 @@
 # Project: Item Catalog
 
-The `Item Catalog` is a web application using the Python framework Flask implementing third-party OAuth authentication, [Google plus](https://developers.google.com/identity/protocols/OAuth2) and [Facebook](https://developers.facebook.com/docs/facebook-login/web) log-in. It provides a list of game items within a variety of genres as well as provides a user registration and authentication system.
+The `Item Catalog` is a web application using the Python framework Flask implementing third-party OAuth authentication, [Google plus](https://developers.google.com/identity/protocols/OAuth2) and [Facebook](https://developers.facebook.com/docs/facebook-login/web) log-in. It provides a list of game items within a variety of genres as well as provides a user registration and authentication system. This project is one of assignments for the [Udacity's Full Stack Web Developer Nanodegree program](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
 - 한글 리드미(README Korean) 파일: [README_ko.md](/README_ko.md)
 

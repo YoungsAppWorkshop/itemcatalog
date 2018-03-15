@@ -1,6 +1,6 @@
 # 프로젝트: 카탈로그(Item Catalog) 앱
 
-카탈로그(Item Catalog) 앱은 파이썬 플라스크 프레임워크를 활용한 웹 애플리케이션으로서, 여러 장르의 게임들의 리스트를 보여주며, 게임을 생성/수정/삭제할 수 있습니다. 또한 [구글 플러스](https://developers.google.com/identity/protocols/OAuth2)와 [페이스북](https://developers.facebook.com/docs/facebook-login/web)의 OAuth 2.0 사용자 인증 및 등록 시스템을 활용하여 로그인/아웃 기능을 구현하였습니다.
+카탈로그(Item Catalog) 앱은 파이썬 플라스크 프레임워크를 활용한 웹 애플리케이션으로서, 여러 장르의 게임들의 리스트를 보여주며, 게임을 생성/수정/삭제할 수 있습니다. 또한 [구글 플러스](https://developers.google.com/identity/protocols/OAuth2)와 [페이스북](https://developers.facebook.com/docs/facebook-login/web)의 OAuth 2.0 사용자 인증 및 등록 시스템을 활용하여 로그인/아웃 기능을 구현하였습니다. 이 앱은 [Udacity의 풀스택 웹개발자 과정](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004)의 일환으로 제작되었습니다.
 
 - 영문 리드미(Engilsh README) 파일: [README.md](/README.md)
 
