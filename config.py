@@ -10,8 +10,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 DATABASE_CONNECT_OPTIONS = {}
 
 # Define API secret files for OAuth2 authentication
-GOOGLE_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'instance/google_client_secrets.json')  # noqa
-FB_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'instance/fb_client_secrets.json')  # noqa
+GOOGLE_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'google_client_secrets.json')  # noqa
+FB_CLIENT_SECRET_FILE = os.path.join(BASE_DIR, 'fb_client_secrets.json')  # noqa
 
 # Define upload folder for users to upload images
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
