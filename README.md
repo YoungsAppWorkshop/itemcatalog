@@ -4,8 +4,10 @@ The `Item Catalog` is a web application using the Python framework Flask impleme
 
 - 한글 리드미(README Korean) 파일: [README_ko.md](/README_ko.md)
 
-## Demo
-Demo Website URL: https://itemcatalog.youngsappworkshop.com
+## Screenshots
+| Game List Page   | Game Detail Page|
+|------------------|-----------------|
+|![Screenshot_01](https://github.com/YoungsAppWorkshop/itemcatalog/blob/master/ScreenShot_01.jpg?raw=true)| ![Screenshot_02](https://github.com/YoungsAppWorkshop/itemcatalog/blob/master/ScreenShot_02.jpg?raw=true) |
 
 ## Installation
 Clone the github repository and install dependencies as follow.

@@ -4,8 +4,10 @@
 
 - 영문 리드미(Engilsh README) 파일: [README.md](/README.md)
 
-## 데모
-데모 웹사이트 URL: https://itemcatalog.youngsappworkshop.com
+## 스크린샷
+| 게임 리스트 페이지   | 상세 페이지    |
+|------------------|-----------------|
+|![Screenshot_01](https://github.com/YoungsAppWorkshop/itemcatalog/blob/master/ScreenShot_01.jpg?raw=true)| ![Screenshot_02](https://github.com/YoungsAppWorkshop/itemcatalog/blob/master/ScreenShot_02.jpg?raw=true) |
 
 ## 어플리케이션 설치
 깃허브 저장소를 복제(clone)하고, 필요한 패키지를 설치합니다. 파이썬 3.x 버전의 패키지 관리자(python3-pip)가 필요합니다.
